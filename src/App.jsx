@@ -1,12 +1,17 @@
+import { BrowserRouter as Router } from "react-router-dom"
+import Navbar from "./components/layouts/Navbar"
 function App() {
 
   return (
-    <>
-       <h1 className="text-3xl font-bold underline text-center">
-      Hello world!
-    </h1>
+    <Router>
+      <div className="flex flex-col justify-between h-screen">
+        <Navbar />
+        <main>
+          Content
+        </main>
+      </div>
     
-    </>
+    </Router>
   )
 }
 
