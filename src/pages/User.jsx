@@ -2,15 +2,17 @@ import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa"
 import { useEffect, useContext } from "react"
 import { useParams, Link } from "react-router-dom"
 import Spinner from "../components/layouts/Spinner"
+import RepoList from "../components/repos/RepoList"
 import GithubContext from "../context/github/GithubContext"
 function User() {
 
-    const {getUser, user, loading} = useContext(GithubContext)
+    const {getUser, user, loading, getUserRepos, repos} = useContext(GithubContext)
 
     const params = useParams()
 
     useEffect(()=> {
         getUser(params.login)
+        getUserRepos(params.login)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -44,7 +46,8 @@ function User() {
             </Link>
             </div>
 
-            <div className='grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 mb-8 md:gap-8'>
+            <div className='grid grid-cols-1 xl:grid-cols-3 
+            lg:grid-cols-3 md:grid-cols-3 mb-8 md:gap-8'>
                 <div className='custom-card-image mb-6 md:mb-0'>
                     <div className='rounded-lg shadow-xl card image-full'>
                     <figure>
@@ -89,13 +92,20 @@ function User() {
                         {blog && (
                             <div className="stats">
                                 <div className="stat-title text-md">Website</div>
-                                <div className="text-lg stat-value"><a href={`https://${blog}`} target="_blank" rel='noreferrer'>{blog}</a></div>
+                                <div className="text-lg stat-value"><a 
+                                href={`https://${blog}`} 
+                                target="_blank" 
+                                rel='noreferrer'
+                                >{blog}</a></div>
                             </div>
                         )}
                         {twitter_username && (
                             <div className="stats">
                                 <div className="stat-title text-md">Twitter</div>
-                                <div className="text-lg stat-value"><a href={`https://twitter.com/${twitter_username}`} target="_blank" rel='noreferrer'>{blog}</a></div>
+                                <div className="text-lg stat-value"><a 
+                                href={`https://twitter.com/${twitter_username}`} 
+                                target="_blank" 
+                                rel='noreferrer'>{blog}</a></div>
                             </div>
                         )}
                     </div>  
@@ -147,11 +157,8 @@ function User() {
                     </div>
                 </div>
             </div>
-        </div>
-
-        
-
-       
+            <RepoList repos={repos} />
+        </div>       
     </>
   )
 }
